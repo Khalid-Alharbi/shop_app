@@ -55,6 +55,8 @@ class ProductsOverviewScreen extends StatelessWidget {
         ),
         itemBuilder: (ctx, i) => ProductItem(
           loadedProducts[i].id,
+          loadedProducts[i].title,
+          loadedProducts[i].imageUrl,
         ),
       ),
     );

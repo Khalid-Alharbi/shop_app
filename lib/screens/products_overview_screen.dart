@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-
-import 'package:shop_app/widgets/products_grid.dart';
+import '../widgets/products_grid.dart';
+import '../providers/cart.dart';
+import '../widgets/badge.dart';
 
 enum FilterOptions {
   Favorites,
@@ -14,11 +16,11 @@ class ProductsOverviewScreen extends StatefulWidget {
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
-
   var _showOnlyFavorites = false;
   @override
   Widget build(BuildContext context) {
     // final productsContainer = Provider.of<Products>(context, listen: false);
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("MyShop"),
@@ -26,16 +28,13 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
               setState(() {
-                
-              if (selectedValue == FilterOptions.Favorites) {
-                // productsContainer.showFavoritesOnly();
+                if (selectedValue == FilterOptions.Favorites) {
+                  // productsContainer.showFavoritesOnly();
                   var _showOnlyFavorites = true;
-
-              } else {
-                // productsContainer.showAll();
+                } else {
+                  // productsContainer.showAll();
                   var _showOnlyFavorites = false;
-
-              }
+                }
               });
             },
             icon: Icon(Icons.more_vert),
@@ -49,6 +48,16 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 value: FilterOptions.All,
               ),
             ],
+          ),
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+              child: ch!,
+              value: cart.itemCount.toString(),
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.shopping_cart),
+            ),
           ),
         ],
       ),

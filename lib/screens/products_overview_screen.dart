@@ -24,7 +24,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("MyShop"),
+        title: const Text("MyShop"),
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
@@ -38,13 +38,13 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 }
               });
             },
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
             itemBuilder: (itemBuilder) => [
-              PopupMenuItem(
+              const PopupMenuItem(
                 child: Text('Only Favorites!'),
                 value: FilterOptions.Favorites,
               ),
-              PopupMenuItem(
+              const PopupMenuItem(
                 child: Text('Show All!'),
                 value: FilterOptions.All,
               ),
@@ -59,7 +59,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               onPressed: () {
                 Navigator.of(context).pushNamed(CartScreen.routeName);
               },
-              icon: Icon(Icons.shopping_cart),
+              icon: const Icon(Icons.shopping_cart),
             ),
           ),
         ],

@@ -48,7 +48,7 @@ class ProductItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.shopping_cart,
             ),
             onPressed: () {

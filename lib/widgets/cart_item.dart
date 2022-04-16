@@ -27,21 +27,21 @@ class CartItem extends StatelessWidget {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
       background: Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           right: 20,
         ),
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
         alignment: Alignment.centerRight,
         color: Theme.of(context).errorColor,
-        child: Icon(
+        child: const Icon(
           Icons.delete,
           color: Colors.white,
         ),
       ),
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ListTile(
             leading: CircleAvatar(
               child: Padding(

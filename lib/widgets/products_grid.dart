@@ -13,9 +13,9 @@ class ProductsGrid extends StatelessWidget {
     final productsData = Provider.of<Products>(context);
     final products = showFavs ? productsData.favoriteItems : productsData.items;
     return GridView.builder(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       itemCount: products.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 3 / 2,
         crossAxisSpacing: 10,

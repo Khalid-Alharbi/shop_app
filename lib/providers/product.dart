@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Product with ChangeNotifier {
-  final String id;
+  final String? id;
   final String title;
   final String description;
   final double price;
@@ -20,5 +20,20 @@ class Product with ChangeNotifier {
   void toggleFavoriteStatus() {
     isFavorite = !isFavorite;
     notifyListeners();
+  }
+
+  Product copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? imageUrl,
+    double? price,
+  }) {
+    return Product(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        imageUrl: imageUrl ?? this.imageUrl,
+        price: price ?? this.price);
   }
 }

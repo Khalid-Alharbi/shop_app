@@ -44,7 +44,8 @@ class Products with ChangeNotifier {
     // }
     return [..._items];
   }
-  List<Product> get favoriteItems{
+
+  List<Product> get favoriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
@@ -71,7 +72,14 @@ class Products with ChangeNotifier {
 
   // }
 
-  void addProduct() {
+  void addProduct(Product product) {
+    final Product newProduct = product.copyWith(
+      id: DateTime.now().toString(),
+    );
+
+    _items.add(newProduct);
+
+    // _items.insert(0, newProduct); //to add it at the beggining of the list (inde binning ging meme  lol )
     // _items.add(value)
     notifyListeners();
   }

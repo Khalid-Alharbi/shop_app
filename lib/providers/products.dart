@@ -99,7 +99,9 @@ class Products with ChangeNotifier {
       // _items.insert(0, newProduct); //to add it at the beggining of the list (inde binning ging meme  lol )
       // _items.add(value)
       notifyListeners();
-      return Future.value();
+    }).catchError((error) {
+      print(error);
+      throw error;
     });
   }
 

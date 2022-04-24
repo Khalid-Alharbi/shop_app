@@ -76,22 +76,24 @@ class Products with ChangeNotifier {
 
   // }
 
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     final url = Uri.parse(
         'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/products');
-    return http
-        .post(url,
-            body: json.encode({
-              'title': product.title,
-              'description': product.description,
-              'price': product.price,
-              'imageUrl': product.imageUrl,
-              'isFavorite': product.isFavorite,
-            }))
-        .then((response) {
+
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl,
+          'isFavorite': product.isFavorite,
+        }),
+      );
       final Product newProduct = product.copyWith(
-        // id: json.decode(response.body)['name'],
-        id: DateTime.now().toString(),
+        id: json.decode(response.body)['name'],
+        // id: DateTime.now().toString(),
       );
 
       _items.add(newProduct);
@@ -99,10 +101,10 @@ class Products with ChangeNotifier {
       // _items.insert(0, newProduct); //to add it at the beggining of the list (inde binning ging meme  lol )
       // _items.add(value)
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       print(error);
       throw error;
-    });
+    }
   }
 
   void updateProduct(String id, Product newProduct) {

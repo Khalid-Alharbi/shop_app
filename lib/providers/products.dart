@@ -91,18 +91,23 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
+    // url =" https://fir-flutted60b0.firebaseio.com/userprofile.json";
     final url = Uri.parse(
-        'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/products');
+        'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/products.json');
 
     try {
+      // final response = await http.post(url,body:json.encode());
       final response = await http.post(
         url,
-        body: json.encode({
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: json.encode(<String, String>{
           'title': product.title,
           'description': product.description,
-          'price': product.price,
+          'price': product.price.toString(),
           'imageUrl': product.imageUrl,
-          'isFavorite': product.isFavorite,
+          'isFavorite': product.isFavorite.toString(),
         }),
       );
       final Product newProduct = product.copyWith(

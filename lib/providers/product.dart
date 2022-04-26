@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 class Product with ChangeNotifier {
   final String? id;
@@ -17,11 +20,6 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  void toggleFavoriteStatus() {
-    isFavorite = !isFavorite;
-    notifyListeners();
-  }
-
   Product copyWith({
     String? id,
     String? title,
@@ -37,5 +35,32 @@ class Product with ChangeNotifier {
         imageUrl: imageUrl ?? this.imageUrl,
         price: price ?? this.price,
         isFavorite: isFavorite ?? this.isFavorite);
+  }
+
+  void _setFavValue(bool newValue) {
+    isFavorite = newValue;
+    notifyListeners();
+  }
+
+  Future<void> toggleFavoriteStatus() async {
+    final oldStatus = isFavorite;
+    isFavorite = !isFavorite;
+    notifyListeners();
+
+    final url = Uri.parse(
+        'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/$id.json');
+    try {
+      final response = await http.patch(
+        url,
+        body: json.encode({
+          'isFavorite': isFavorite,
+        }),
+      );
+      if (response.statusCode >= 400) {
+        _setFavValue(oldStatus);
+      }
+    } catch (error) {
+      _setFavValue(oldStatus);
+    }
   }
 }

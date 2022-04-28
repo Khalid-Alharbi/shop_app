@@ -78,17 +78,19 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts() async {
-    final url = Uri.parse(
-        'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/products');
+    final url = Uri.https(
+        'shop-app-7aa11-default-rtdb.firebaseio.com', '/products.json');
+    // final url = Uri.parse(
+    //     'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/products');
 
     try {
       final response = await http.get(url);
-      print(json.decode(response.body));
+      // print(json.decode(response.body));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      final List<Product> loadedProducts = [];
       if (extractedData == null) {
         return;
       }
+      final List<Product> loadedProducts = [];
       extractedData.forEach(
         (prodId, prodData) {
           loadedProducts.add(
@@ -107,21 +109,19 @@ class Products with ChangeNotifier {
       notifyListeners();
     } catch (error) {
       throw (error);
+      // rethrow;
     }
   }
 
   Future<void> addProduct(Product product) async {
-    // url =" https://fir-flutted60b0.firebaseio.com/userprofile.json";
-    final url = Uri.parse(
-        'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/products.json');
+    final url = Uri.https(
+        'shop-app-7aa11-default-rtdb.firebaseio.com', '/products.json');
+    // final url = Uri.parse(
+    //     'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/products.json');
 
     try {
-      // final response = await http.post(url,body:json.encode());
       final response = await http.post(
         url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
         body: json.encode(<String, String>{
           'title': product.title,
           'description': product.description,
@@ -150,8 +150,9 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
 
     if (prodIndex >= 0) {
-      final url = Uri.parse(
-          'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/$id.json');
+      final url = Uri.https(
+          'shop-app-7aa11-default-rtdb.firebaseio.com', '/products/$id.json');
+
       await http.patch(url,
           body: json.encode({
             'title': newProduct.title,
@@ -167,8 +168,9 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = Uri.parse(
-        'https://flutter-http-6bf1b-default-rtdb.firebaseio.com/$id.json');
+    final url = Uri.https(
+        'shop-app-7aa11-default-rtdb.firebaseio.com', '/products/$id.json');
+
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);

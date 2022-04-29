@@ -11,7 +11,7 @@ import './screens/product_detail_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/orders_screen.dart';
 import './screens/user_products.screen.dart';
-import './screens/4.1 auth_screen.dart';
+import 'screens/auth_screen.dart';
 
 void main() {
   runApp(const MyApp());

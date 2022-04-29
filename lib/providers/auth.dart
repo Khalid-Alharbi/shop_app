@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
-  late String _token;
-  late DateTime _expiryDate;
-  late String _userId;
+  String? _token;
+  DateTime? _expiryDate;
+  String? _userId;
 
   bool get isAuth {
     return token != null;
@@ -15,7 +15,7 @@ class Auth with ChangeNotifier {
 
   String? get token {
     if (_expiryDate != null &&
-        _expiryDate.isAfter(DateTime.now()) &&
+        _expiryDate!.isAfter(DateTime.now()) &&
         _token != null) {
       return _token;
     }

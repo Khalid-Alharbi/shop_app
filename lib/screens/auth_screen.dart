@@ -105,7 +105,7 @@ class _AuthCardState extends State<AuthCard> {
   final _passwordController = TextEditingController();
 
   void _showErrorDialog(String message) {
-    showDialog(
+    showDialog<Null>(
         context: context,
         builder: (ctx) => AlertDialog(
               title: Text("An Error Occurred!"),
@@ -143,8 +143,6 @@ class _AuthCardState extends State<AuthCard> {
           _authData['email']!,
           _authData['password']!,
         );
-        Navigator.of(context)
-            .pushReplacementNamed(ProductsOverviewScreen.routeNamed);
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authenticate failed';
@@ -161,7 +159,7 @@ class _AuthCardState extends State<AuthCard> {
         errorMessage = 'Invalid password';
       }
       _showErrorDialog(errorMessage);
-    } catch (erroe) {
+    } catch (error) {
       const errorMessage = 'Could not authenticate you. Please try again later';
       _showErrorDialog(errorMessage);
     }

@@ -52,7 +52,7 @@ class AppDrawer extends StatelessWidget {
 
               //     .pushReplacementNamed(UserProductsScreen.routeName);
               Navigator.of(context).pop();
-              Provider.of<Auth>(context, listen: false).logOut();
+              Provider.of<Auth>(context, listen: false).logout();
             },
           ),
         ],

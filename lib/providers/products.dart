@@ -82,22 +82,52 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
-    final filterString =
-        filterByUser ? 'orderBy="creatorId"&equalTo"$userId"' : '';
+// from here is copied
+    var _params;
+    if (filterByUser) {
+      _params = <String, String>{
+        'auth': authToken!,
+        'orderBy': json.encode("creatorId"),
+        'equalTo': json.encode(userId),
+      };
+    }
+    if (filterByUser == false) {
+      _params = <String, String>{
+        'auth': authToken!,
+      };
+    }
+    // var url = Uri.https('myshop-tutorial-419d3-default-rtdb.firebaseio.com',
+    //     '/products.json', _params);
+
+    //to here
+
+    // final filterString =
+    // filterByUser ? 'orderBy="creatorId"&equalTo"$userId"' : '';
+
+    // var url = Uri.https('shop-app-7aa11-default-rtdb.firebaseio.com',
+    //     '/products.json?auth=$authToken&$filterString');
     var url = Uri.https('shop-app-7aa11-default-rtdb.firebaseio.com',
-        '/products.json?auth=$authToken&$filterString');
+        '/products.json', _params);
 
     try {
       final response = await http.get(url);
       // print(json.decode(response.body));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
+        print('check didnt pass');
         return;
       }
       url = Uri.https('shop-app-7aa11-default-rtdb.firebaseio.com',
           '/userFavorites/$userId.json?auth=$authToken');
+
+      // url = Uri.https('shop-app-7aa11-default-rtdb.firebaseio.com',
+      // '/userFavorites/$userId.json?auth=$authToken');
+
+      // url = Uri.https('shop-app-7aa11-default-rtdb.firebaseio.com',
+      // '/userFavorites/$userId.json', {'auth': '$authToken'});
+
       final favoriteResponse = await http.get(url);
-      final favoriteData = jsonDecode(favoriteResponse.body);
+      final favoriteData = json.decode(favoriteResponse.body);
       final List<Product> loadedProducts = [];
       extractedData.forEach(
         (prodId, prodData) {
@@ -117,6 +147,7 @@ class Products with ChangeNotifier {
       _items = loadedProducts;
       notifyListeners();
     } catch (error) {
+      // print(error);
       throw (error);
       // rethrow;
     }

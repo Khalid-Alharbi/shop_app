@@ -27,9 +27,13 @@ class ProductItem extends StatelessWidget {
             Navigator.of(context).pushNamed(ProductDetailScreen.routeNamed,
                 arguments: product.id);
           },
-          child: Image.network(
-            product.imageUrl,
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: product.id!,
+            child: FadeInImage(
+              image: NetworkImage(product.imageUrl),
+              placeholder: AssetImage('assets/images/product-placeholder.png'),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         footer: GridTileBar(

@@ -37,7 +37,7 @@ class Auth with ChangeNotifier {
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
     final url = Uri.parse(
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=${googleApi.apiKey}');
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=${googleApi.apiKey}'); // to get the api key you must go to your firebase console and get the project web api
     try {
       final response = await http.post(
         url,
